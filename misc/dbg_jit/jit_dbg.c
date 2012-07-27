@@ -30,9 +30,12 @@ void sighandler(int signo)
     snprintf(gdb_path, sizeof(gdb_path),
             "%s",
             (val = getenv(ENV_GDB_PATH)) ? val : DEFAULT_GDB_PATH);
+
     snprintf(set_logging_file, sizeof(set_logging_file),
-            "set logging file %s",
-            (val = getenv(ENV_OUT_FILE)) ? val : DEFAULT_OUT_FILE);
+            "set logging file %s-%d",
+             (val = getenv(ENV_OUT_FILE)) ? val : DEFAULT_OUT_FILE,
+             getpid());
+
     snprintf(buf, sizeof(buf), "%d", getpid());
 
     // spawn a individual gdb process and dumping backtrace of this process
